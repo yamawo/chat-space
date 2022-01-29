@@ -45,3 +45,13 @@ func (s *server) PostMessage(ctx context.Context, request *chat.Message) (*chat.
 
 	return result, nil
 }
+
+func NewRedisClient() *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:     "redis:6379",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+
+	return client
+}
