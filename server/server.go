@@ -1,3 +1,14 @@
+package server
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+
+	"github.com/go-redis/redis/v8"
+)
+
 func (s *server) GetMessages(request *empty.Empty, stream chat.Chat_GetMessagesServer) error {
 	client := NewRedisClient()
 
