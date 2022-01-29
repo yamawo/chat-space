@@ -1,6 +1,7 @@
 package server
 
 import (
+	"chat-space/api/pb"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -8,6 +9,10 @@ import (
 
 	"github.com/go-redis/redis/v8"
 )
+
+const Channel = "chatChannel"
+
+type server struct{}
 
 func (s *server) GetMessages(request *empty.Empty, stream chat.Chat_GetMessagesServer) error {
 	client := NewRedisClient()
