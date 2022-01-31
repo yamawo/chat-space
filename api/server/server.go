@@ -8,6 +8,8 @@ import (
 	"log"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/golang/protobuf/ptypes"
+	"github.com/golang/protobuf/ptypes/empty"
 )
 
 const Channel = "chatChannel"
