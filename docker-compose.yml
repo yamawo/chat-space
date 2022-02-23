@@ -1,0 +1,23 @@
+version: "3"
+services:
+  proxy:
+    build: ./proxy
+    ports:
+      - "8080:8080"
+    links:
+      - backend
+    container_name: proxy
+
+  backend:
+    build: .
+    stdin_open: true
+    tty: true
+    ports:
+      - 50051:50051
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6.0
+    ports:
+      - 6379:6379
