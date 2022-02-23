@@ -1,6 +1,7 @@
 package main
 
 import (
+	"chat-space/api/pb"
 	"chat-space/api/server"
 	"log"
 	"net"
@@ -17,11 +18,11 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	chat.RegisterChatServer(s, &server{})
+	chat.RegisterChatServer(s, &server.Server{})
 
 	reflection.Register(s)
 
-	client := NewRedisClient()
+	client := server.NewRedisClient()
 	log.Print(client.Ping().Err())
 
 	if err := s.Serve(lis); err != nil {

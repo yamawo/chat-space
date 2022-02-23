@@ -7,16 +7,18 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v7"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/empty"
 )
 
 const Channel = "chatChannel"
 
-type server struct{}
+type Server struct {
+	chat.UnimplementedChatServer
+}
 
-func (s *server) GetMessages(request *empty.Empty, stream chat.Chat_GetMessagesServer) error {
+func (s *Server) GetMessages(request *empty.Empty, stream chat.Chat_GetMessagesServer) error {
 	client := NewRedisClient()
 
 	pubsub := client.Subscribe(Channel)
@@ -46,7 +48,7 @@ func (s *server) GetMessages(request *empty.Empty, stream chat.Chat_GetMessagesS
 	return nil
 }
 
-func (s *server) PostMessage(ctx context.Context, request *chat.Message) (*chat.Result, error) {
+func (s *Server) PostMessage(ctx context.Context, request *chat.Message) (*chat.Result, error) {
 	client := NewRedisClient()
 
 	if request.GetCreatedAt() == nil {
